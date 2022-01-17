@@ -82,8 +82,19 @@ const Register = () => {
     mobile: "",
     password: "",
   });
+  function just_persian(str) {
+    const p = /^[\u0600-\u06FF\u0698\u067E\u0686\u06AF\s]+$/;
+    return p.test(str);
+
+  }
   function onChange(element, value) {
-    handleInputChangeWithParam(element.target.name, value);
+    const _fieldName = element.target.name;
+    if (_fieldName === "name" || _fieldName === "family") {
+      if (!just_persian(value) && value.length > 0) {
+        return;
+      }
+    }
+    handleInputChangeWithParam(_fieldName, value);
   }
   function checkPassword(pass) {
     if (pass.length < 4) {

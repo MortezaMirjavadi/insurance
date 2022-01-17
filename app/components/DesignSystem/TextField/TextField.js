@@ -63,9 +63,7 @@ const useStyles = createUseStyles({
       },
     },
   }),
-  errored: {
-
-  },
+  errored: {},
   errorContainer: {
     width: "100%",
     height: 10,

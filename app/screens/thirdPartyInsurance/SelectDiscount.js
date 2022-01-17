@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createUseStyles } from "react-jss";
 import { Button, Select } from "@Components/DesignSystem";
 import { useInput } from "@App/hooks/useInput";
@@ -94,6 +94,10 @@ const useStyles = createUseStyles({
 const SelectDiscount = () => {
   const localStyle = useStyles();
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState({
+    thirdDiscount: "",
+    driverDiscount: "",
+  });
   const { values, handleInputChangeWithParam } = useInput({
     thirdDiscount: null,
     driverDiscount: null,
@@ -109,6 +113,16 @@ const SelectDiscount = () => {
   }, []);
 
   function nextLevel() {
+    if (values.thirdDiscount === null || values.driverDiscount === null) {
+      const _required = "اجباری";
+      setErrors({
+        ...errors,
+        thirdDiscount: values.thirdDiscount === null ? _required : "",
+        driverDiscount: values.driverDiscount === null ? _required : "",
+      });
+      return;
+    }
+    setErrors({ thirdDiscount: "", driverDiscount: "" });
     dispatch(
       selectDiscount({
         discount: values.thirdDiscount.title,
@@ -133,6 +147,7 @@ const SelectDiscount = () => {
             onSelect={handleInputChangeWithParam}
             value={values.thirdDiscount}
             items={thirdDiscount}
+            errorMessage={errors}
           />
         </div>
         <div className={localStyle.half}>
@@ -143,6 +158,7 @@ const SelectDiscount = () => {
             onSelect={handleInputChangeWithParam}
             value={values.driverDiscount}
             items={driverDiscount}
+            errorMessage={errors}
           />
         </div>
       </div>

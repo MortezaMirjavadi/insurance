@@ -92,6 +92,10 @@ const useStyles = createUseStyles({
 const SelectCar = () => {
   const localStyle = useStyles();
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState({
+    carType: "",
+    carModel: "",
+  });
   const { values, setValues, handleInputChangeWithParam } = useInput({
     carType: null,
     carModel: null,
@@ -113,7 +117,18 @@ const SelectCar = () => {
     const _find = carTypes[0].brands.find((x) => x.id === value.id);
     setCarModels(_find.models);
   }
+
   function nextLevel() {
+    if (values.carType === null || values.carModel === null) {
+      const _required = "اجباری";
+      setErrors({
+        ...errors,
+        carType: values.carType === null ? _required : "",
+        carModel: values.carModel === null ? _required : "",
+      });
+      return;
+    }
+    setErrors({ carType: "", carModel: "" });
     dispatch(
       selectCarTypeAndModel({
         carType: values.carType.title,
@@ -141,6 +156,7 @@ const SelectCar = () => {
             onSelect={changeCarType}
             value={values.carType}
             items={carTypes.length > 0 && carTypes[0].brands}
+            errorMessage={errors}
           />
         </div>
         <div className={localStyle.half}>
@@ -151,6 +167,7 @@ const SelectCar = () => {
             onSelect={handleInputChangeWithParam}
             value={values.carModel}
             items={carModels}
+            errorMessage={errors}
           />
         </div>
       </div>

@@ -96,10 +96,17 @@ const useStyles = createUseStyles({
     position: "absolute",
     left: 10,
   },
+  errorContainer: {
+    width: "100%",
+    height: 10,
+    fontSize: 12,
+    color: "red",
+    marginTop: 3,
+  },
 });
 
 const Select = (props) => {
-  const { label, onSelect, items, name, value, loading } = props;
+  const { label, onSelect, items, name, value, loading, errorMessage } = props;
   const localStyle = useStyles();
   const [showList, setShowList] = React.useState(false);
 
@@ -137,6 +144,9 @@ const Select = (props) => {
           {!loading ? <LeftArrowIcon /> : <Spinner />}
         </div>
       </div>
+      <div className={localStyle.errorContainer}>
+        {errorMessage && errorMessage[name]}
+      </div>
       {showList && (
         <div className={localStyle.itemsContainer}>
           {items &&
@@ -165,6 +175,7 @@ Select.propTypes = {
   label: PropTypes.string,
   onSelect: PropTypes.func,
   loading: PropTypes.bool,
+  errorMessage: PropTypes.object,
 };
 
 export default Select;

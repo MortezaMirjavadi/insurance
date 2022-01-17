@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { createUseStyles } from "react-jss";
 import { Button, Select } from "@Components/DesignSystem";
 import { useInput } from "@App/hooks/useInput";
@@ -91,6 +91,9 @@ const useStyles = createUseStyles({
 const OldInsureCompany = () => {
   const localStyle = useStyles();
   const dispatch = useDispatch();
+  const [errors, setErrors] = useState({
+    insureCompany: "",
+  });
   const { values, handleInputChangeWithParam } = useInput({
     insureCompany: null,
   });
@@ -106,6 +109,15 @@ const OldInsureCompany = () => {
     handleInputChangeWithParam(key, value);
   }
   function nextLevel() {
+    if (values.carType === null) {
+      const _required = "اجباری";
+      setErrors({
+        ...errors,
+        insureCompany: values.insureCompany === null ? _required : "",
+      });
+      return;
+    }
+    setErrors({insureCompany: ""});
     dispatch(selectOldInsureCompany(values.insureCompany.title));
     dispatch(changeWizardLevel(WIZARD_PROCESS.DISCOUNT));
   }
