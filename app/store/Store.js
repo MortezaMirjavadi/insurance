@@ -9,7 +9,9 @@ import reducers from "./rootReducer";
 export function createStore({ initialState = {}, thunkArguments = {} }) {
   const middlewares = compose(
     applyMiddleware(thunk.withExtraArgument(thunkArguments)),
-    window.devToolsExtension ? window.devToolsExtension() : (f) => f
+    window.__REDUX_DEVTOOLS_EXTENSION__
+      ? window.__REDUX_DEVTOOLS_EXTENSION__()
+      : (f) => f
   );
 
   return buildReduxStore(reducers, initialState, middlewares);

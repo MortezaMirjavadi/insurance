@@ -10,3 +10,10 @@ export const MESSAGE_TYPE = {
     WARNING: "warning",
     ERROR: "error"
 };
+
+export const WIZARD_PROCESS = {
+    REGISTER: "REGISTER",
+    CAR_TYPE_AND_MODEL: "CAR_TYPE_AND_MODEL",
+    OLD_INSURE_COMPANY: "OLD_INSURE_COMPANY",
+    DISCOUNT: "DISCOUNT"
+};

@@ -6,3 +6,18 @@ ApiPrototype.getCarType = function() {
     method: HTTP_METHOD_TYPE.GET,
   });
 };
+ApiPrototype.getInsureCompanies = function() {
+  return this.apiCall("third/companies", {
+    method: HTTP_METHOD_TYPE.GET,
+  });
+};
+ApiPrototype.getThirdDiscount = function() {
+  return this.apiCall("third/third-discounts", {
+    method: HTTP_METHOD_TYPE.GET,
+  });
+};
+ApiPrototype.getDriverDiscount = function() {
+  return this.apiCall("third/driver-discounts", {
+    method: HTTP_METHOD_TYPE.GET,
+  });
+};

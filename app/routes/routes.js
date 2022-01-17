@@ -2,7 +2,7 @@ import { lazy } from "@loadable/component";
 import { AuthenticatedRoute, AuthenticatedRouteInLogin } from "@Routes/router";
 
 const Register = lazy(() => import("@Screens/register/Register"));
-const ThirdPartyInsurance = lazy(() => import("@Screens/thirdPartyInsurance/ThirdPartyInsurance"));
+const ThirdPartyInsurance = lazy(() => import("@Components/Layout"));
 
 const routes = [
   {

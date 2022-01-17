@@ -22,7 +22,7 @@ const useStyles = createUseStyles({
     position: "absolute",
     whiteSpace: "nowrap",
     overflow: "hidden",
-    fontSize: pxToRem(8),
+    fontSize: pxToRem(12),
     top: 0,
     display: "flex",
     background: "white",

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SVG from "/SVGIcon";
+import SVG from "./SVGIcon";
 
 const LeftArrowIcon = (props) => {
   return (
@@ -24,7 +24,7 @@ export default React.memo(LeftArrowIcon);
 
 LeftArrowIcon.defaultProps = {
   className: "",
-  color: "white",
+  color: "rgb(156,156,156)",
   width: 24,
   height: 24,
 };
