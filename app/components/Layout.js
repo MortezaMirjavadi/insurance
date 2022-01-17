@@ -8,11 +8,9 @@ import OldInsureCompany from "@Screens/thirdPartyInsurance/OldInsureCompany";
 import SelectDiscount from "@Screens/thirdPartyInsurance/SelectDiscount";
 import Modal from "@Components/Modal";
 import { useSelector } from "react-redux";
-import {
-  isShowModalSelector,
-  wizardLevelSelector,
-} from "@Store/thirdPartyInsurance/Selector";
+import { wizardLevelSelector } from "@Store/thirdPartyInsurance/Selector";
 import { WIZARD_PROCESS } from "@Config/constants";
+import { isShowModalSelector } from "@Store/general/Selector";
 
 const useStyles = createUseStyles({
   mainContainer: {

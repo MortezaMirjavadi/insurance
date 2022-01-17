@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getDriverDiscount,
   getThirdDiscount,
-  showModal,
+  selectDiscount,
 } from "@Store/thirdPartyInsurance/Actions";
 import {
   driverDiscountSelector,
@@ -15,6 +15,7 @@ import {
   thirdDiscountSelector,
 } from "@Store/thirdPartyInsurance/Selector";
 import Detail from "@Screens/thirdPartyInsurance/Detail";
+import { showModal } from "@Store/general/Actions";
 
 const useStyles = createUseStyles({
   root: {
@@ -90,7 +91,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const SelectCar = () => {
+const SelectDiscount = () => {
   const localStyle = useStyles();
   const dispatch = useDispatch();
   const { values, handleInputChangeWithParam } = useInput({
@@ -108,8 +109,13 @@ const SelectCar = () => {
   }, []);
 
   function nextLevel() {
-    // console.log(values);
-    dispatch(showModal(<Detail name="test" />));
+    dispatch(
+      selectDiscount({
+        discount: values.thirdDiscount.title,
+        driver: values.driverDiscount.title,
+      })
+    );
+    dispatch(showModal(<Detail />));
   }
 
   return (
@@ -157,7 +163,7 @@ const SelectCar = () => {
   );
 };
 
-SelectCar.displayName = "SelectCar";
-SelectCar.propTypes = {};
+SelectDiscount.displayName = "SelectCar";
+SelectDiscount.propTypes = {};
 
-export default SelectCar;
+export default SelectDiscount;

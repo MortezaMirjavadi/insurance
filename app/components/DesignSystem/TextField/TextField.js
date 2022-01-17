@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import createClass from "classnames";
-import {createUseStyles} from "react-jss";
+import { createUseStyles } from "react-jss";
 import useControlled from "@App/hooks/useControlled";
-import {pxToRem} from "@Utils/helper";
+import { pxToRem } from "@Utils/helper";
+
+const allowedTypes = ["text", "password"];
+const allowedDirections = ["rtl", "ltr"];
 
 const componentName = "TextField";
 
 const useStyles = createUseStyles({
-  root: {
-  },
+  root: {},
   base: { cursor: "text", width: "100%", height: "100%" },
   fieldWrapper: {
     display: "flex",
@@ -37,7 +39,8 @@ const useStyles = createUseStyles({
     transition: "all .2s linear",
     top: pxToRem(-20),
   },
-  inp: {
+  inp: ({ direction }) => ({
+    direction: direction ? direction : "rtl",
     resize: "none",
     fontSize: pxToRem(12),
     color: "black",
@@ -59,11 +62,23 @@ const useStyles = createUseStyles({
         borderColor: "gray",
       },
     },
+  }),
+  errored: {
+
+  },
+  errorContainer: {
+    width: "100%",
+    height: 10,
+    fontSize: 12,
+    color: "red",
+    marginTop: 3,
   },
 });
 
 const TextField = React.forwardRef(function TextField(props, ref) {
   const {
+    direction,
+    type,
     className,
     label,
     onFocus,
@@ -72,20 +87,21 @@ const TextField = React.forwardRef(function TextField(props, ref) {
     value: valueProp,
     disabled,
     hasError,
+    errorMessage,
     required,
     readOnly,
     onChange,
     defaultValue,
   } = props;
 
-  const localStyle = useStyles();
+  const localStyle = useStyles(props);
   const [isFocused, setFocused] = useState(false);
   const [isMounted, setMounted] = useState(false);
 
   const [value, setValue, isControlled] = useControlled(
-      valueProp,
-      defaultValue,
-      componentName
+    valueProp,
+    defaultValue,
+    componentName
   );
 
   const refInp = useRef();
@@ -127,45 +143,51 @@ const TextField = React.forwardRef(function TextField(props, ref) {
   }, []);
 
   return (
+    <div
+      ref={ref}
+      className={createClass(className, localStyle.root, localStyle.base)}
+    >
       <div
-          ref={ref}
-          className={createClass(className, localStyle.root, localStyle.base)}
+        className={localStyle.fieldWrapper}
+        onFocus={controlProps.onFocus}
+        onBlur={controlProps.onBlur}
+        onChange={controlProps.onChange}
       >
-        <div
-            className={localStyle.fieldWrapper}
-            onFocus={controlProps.onFocus}
-            onBlur={controlProps.onBlur}
-            onChange={controlProps.onChange}
+        <label
+          onClick={controlProps.onFocus}
+          className={createClass(localStyle.label, {
+            [localStyle.labelFocus]: isFocused || value?.length > 0,
+          })}
         >
-          <label
-              onClick={controlProps.onFocus}
-              className={createClass(localStyle.label, {
-                [localStyle.labelFocus]: isFocused || value?.length > 0,
-              })}
-          >
-            {label}
-          </label>
-          <input
-              type="text"
-              ref={refInp}
-              className={localStyle.inp}
-              name={nameProp}
-              value={value}
-              onChange={controlProps.onChange}
-          />
-        </div>
+          {label}
+        </label>
+        <input
+          type={type}
+          ref={refInp}
+          className={localStyle.inp}
+          name={nameProp}
+          value={value}
+          onChange={controlProps.onChange}
+        />
       </div>
+      <div className={localStyle.errorContainer}>
+        {errorMessage && errorMessage[nameProp]}
+      </div>
+    </div>
   );
 });
 
 TextField.propTypes = {
   name: PropTypes.string,
+  type: PropTypes.oneOf(allowedTypes),
+  direction: PropTypes.oneOf(allowedDirections),
   className: PropTypes.string,
   value: PropTypes.string,
   label: PropTypes.string,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
+  errorMessage: PropTypes.object,
 };
 
 TextField.displayName = componentName;

@@ -22,21 +22,25 @@ const loadingsSelector = createSelector(
   thirdPartyInsurance,
   (state) => state.loadings
 );
-const modalContentSelector = createSelector(
-  thirdPartyInsurance,
-  (state) => state.modalContent
-);
-const isShowModalSelector = createSelector(
-  thirdPartyInsurance,
-  (state) => state.isShowModal
-);
 const wizardLevelSelector = createSelector(
-    thirdPartyInsurance,
-    (state) => state.wizardLevel
+  thirdPartyInsurance,
+  (state) => state.wizardLevel
 );
 const profileSelector = createSelector(
-    thirdPartyInsurance,
-    (state) => state.profile
+  thirdPartyInsurance,
+  (state) => state.profile
+);
+const selectCarSelector = createSelector(
+  thirdPartyInsurance,
+  (state) => state.selectCar
+);
+const selectInsureCompanySelector = createSelector(
+  thirdPartyInsurance,
+  (state) => state.insureCompany
+);
+const selectDiscountSelector = createSelector(
+  thirdPartyInsurance,
+  (state) => state.selectDiscount
 );
 
 export {
@@ -45,8 +49,9 @@ export {
   thirdDiscountSelector,
   driverDiscountSelector,
   loadingsSelector,
-  modalContentSelector,
-  isShowModalSelector,
   wizardLevelSelector,
   profileSelector,
+  selectCarSelector,
+  selectInsureCompanySelector,
+  selectDiscountSelector,
 };

@@ -6,7 +6,7 @@ import createClass from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeWizardLevel,
-  getInsureCompanies,
+  getInsureCompanies, selectOldInsureCompany,
 } from "@Store/thirdPartyInsurance/Actions";
 import {
   insureCompaniesSelector,
@@ -88,7 +88,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const SelectCar = () => {
+const OldInsureCompany = () => {
   const localStyle = useStyles();
   const dispatch = useDispatch();
   const { values, handleInputChangeWithParam } = useInput({
@@ -106,7 +106,7 @@ const SelectCar = () => {
     handleInputChangeWithParam(key, value);
   }
   function nextLevel() {
-    console.log(values);
+    dispatch(selectOldInsureCompany(values.insureCompany.title));
     dispatch(changeWizardLevel(WIZARD_PROCESS.DISCOUNT));
   }
   function prevLevel() {
@@ -157,7 +157,7 @@ const SelectCar = () => {
   );
 };
 
-SelectCar.displayName = "SelectCar";
-SelectCar.propTypes = {};
+OldInsureCompany.displayName = "SelectCar";
+OldInsureCompany.propTypes = {};
 
-export default SelectCar;
+export default OldInsureCompany;

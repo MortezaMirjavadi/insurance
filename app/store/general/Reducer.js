@@ -1,8 +1,10 @@
 import { MESSAGE_TYPE } from "@Config/constants";
-import { CLOSE_SNACK_BAR, SHOW_SNACK_BAR } from "@Store/ActionTypes";
+import {ACTION_CLOSE_MODAL, ACTION_SHOW_MODAL, CLOSE_SNACK_BAR, SHOW_SNACK_BAR} from "@Store/ActionTypes";
 import produce from "immer";
 
 const initialState = {
+  isShowModal: false,
+  modalContent: null,
   isShowSnackbar: false,
   snackbarMessage: {
     message: "",
@@ -11,6 +13,18 @@ const initialState = {
 };
 
 const handleStates = {
+  [ACTION_CLOSE_MODAL]: (state) => {
+    return produce(state, (draftState) => {
+      draftState.isShowModal = false;
+      draftState.modalContent = null;
+    });
+  },
+  [ACTION_SHOW_MODAL]: (state, action) => {
+    return produce(state, (draftState) => {
+      draftState.modalContent = action.content;
+      draftState.isShowModal = true;
+    });
+  },
   [SHOW_SNACK_BAR]: (state, action) => {
     const { message, messageType } = action;
     return produce(state, (draftState) => {
@@ -19,7 +33,7 @@ const handleStates = {
       draftState.messageType = messageType ? messageType : MESSAGE_TYPE.SUCCESS;
     });
   },
-  [CLOSE_SNACK_BAR]: (state, action) => {
+  [CLOSE_SNACK_BAR]: (state) => {
     return produce(state, (draftState) => {
       draftState.isShowSnackbar = false;
     });

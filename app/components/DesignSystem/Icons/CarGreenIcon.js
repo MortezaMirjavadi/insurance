@@ -509,7 +509,7 @@ CarGreenIcon.defaultProps = {
   className: "",
   color: "white",
   width: 700,
-  height: 320,
+  height: 280,
 };
 
 CarGreenIcon.propTypes = {

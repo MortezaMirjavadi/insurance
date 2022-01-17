@@ -1,11 +1,13 @@
 import {
   ACTION_CHANGE_PROFILE,
   ACTION_CHANGE_WIZARD,
-  ACTION_CLOSE_MODAL,
   ACTION_GET_CAR_TYPE,
   ACTION_GET_DRIVER_DISCOUNT,
   ACTION_GET_INSURE_COMPANIES,
-  ACTION_GET_THIRD_DISCOUNT, ACTION_SHOW_MODAL,
+  ACTION_GET_THIRD_DISCOUNT,
+  ACTION_SELECT_CAR,
+  ACTION_SELECT_DISCOUNT,
+  ACTION_SELECT_OLD_INSURE_COMPANY,
 } from "@Store/ActionTypes";
 
 export function getCarType() {
@@ -85,26 +87,11 @@ export function getDriverDiscount() {
     return result;
   };
 }
-export function closeModal() {
-  return function(dispatch) {
-    dispatch({
-      type: ACTION_CLOSE_MODAL,
-    });
-  };
-}
-export function showModal(content) {
-  return function(dispatch) {
-    dispatch({
-      type: ACTION_SHOW_MODAL,
-      content
-    });
-  };
-}
 export function changeWizardLevel(level) {
   return function(dispatch) {
     dispatch({
       type: ACTION_CHANGE_WIZARD,
-      level
+      level,
     });
   };
 }
@@ -112,7 +99,31 @@ export function changeProfile(data) {
   return function(dispatch) {
     dispatch({
       type: ACTION_CHANGE_PROFILE,
-      data
+      data,
+    });
+  };
+}
+export function selectCarTypeAndModel(data) {
+  return function(dispatch) {
+    dispatch({
+      type: ACTION_SELECT_CAR,
+      data,
+    });
+  };
+}
+export function selectOldInsureCompany(data) {
+  return function(dispatch) {
+    dispatch({
+      type: ACTION_SELECT_OLD_INSURE_COMPANY,
+      data,
+    });
+  };
+}
+export function selectDiscount(data) {
+  return function(dispatch) {
+    dispatch({
+      type: ACTION_SELECT_DISCOUNT,
+      data,
     });
   };
 }

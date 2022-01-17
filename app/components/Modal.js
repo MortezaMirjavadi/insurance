@@ -1,9 +1,8 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
 import { useDispatch, useSelector } from "react-redux";
-import { modalContentSelector } from "@Store/thirdPartyInsurance/Selector";
-import { closeModal } from "@Store/thirdPartyInsurance/Actions";
-import Detail from "@Screens/thirdPartyInsurance/Detail";
+import { modalContentSelector } from "@Store/general/Selector";
+import { closeModal } from "@Store/general/Actions";
 
 const useStyles = createUseStyles({
   root: {

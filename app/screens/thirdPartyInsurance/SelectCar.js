@@ -4,12 +4,16 @@ import { Button, Select } from "@Components/DesignSystem";
 import { useInput } from "@App/hooks/useInput";
 import createClass from "classnames";
 import { useDispatch, useSelector } from "react-redux";
-import {changeWizardLevel, getCarType} from "@Store/thirdPartyInsurance/Actions";
+import {
+  changeWizardLevel,
+  getCarType,
+  selectCarTypeAndModel,
+} from "@Store/thirdPartyInsurance/Actions";
 import {
   carTypesSelector,
   loadingsSelector,
 } from "@Store/thirdPartyInsurance/Selector";
-import {WIZARD_PROCESS} from "@Config/constants";
+import { WIZARD_PROCESS } from "@Config/constants";
 
 const useStyles = createUseStyles({
   root: {
@@ -110,7 +114,12 @@ const SelectCar = () => {
     setCarModels(_find.models);
   }
   function nextLevel() {
-    console.log(values);
+    dispatch(
+      selectCarTypeAndModel({
+        carType: values.carType.title,
+        carModel: values.carModel.title,
+      })
+    );
     dispatch(changeWizardLevel(WIZARD_PROCESS.OLD_INSURE_COMPANY));
   }
   function prevLevel() {
@@ -157,8 +166,13 @@ const SelectCar = () => {
             />
           </div>
           <div className={localStyle.btnReturn}>
-            <Button label="بازگشت" variant="outlined" rounded arrow="right"
-            onClick={prevLevel}/>
+            <Button
+              label="بازگشت"
+              variant="outlined"
+              rounded
+              arrow="right"
+              onClick={prevLevel}
+            />
           </div>
         </div>
       </div>

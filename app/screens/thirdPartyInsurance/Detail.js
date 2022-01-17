@@ -1,6 +1,12 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import {
+  profileSelector,
+  selectCarSelector,
+  selectDiscountSelector,
+  selectInsureCompanySelector,
+} from "@Store/thirdPartyInsurance/Selector";
 
 const useStyles = createUseStyles({
   root: {
@@ -27,64 +33,62 @@ const useStyles = createUseStyles({
   },
 });
 
-const Detail = ({
-  name,
-  family,
-  mobile,
-  carType,
-  carModel,
-  insureCompany,
-  discount,
-  driverDiscount,
-}) => {
+const Detail = () => {
   const localStyle = useStyles();
+
+  const profile = useSelector(profileSelector);
+  const selectCar = useSelector(selectCarSelector);
+  const selectInsureCompany = useSelector(selectInsureCompanySelector);
+  const selectDiscount = useSelector(selectDiscountSelector);
+
   return (
     <div className={localStyle.root}>
       <div className={localStyle.row}>
         <div className={localStyle.label}>نام:</div>
-        <strong className={localStyle.detail}>{name}</strong>
+        <strong className={localStyle.detail}>{profile.name}</strong>
       </div>
       <div className={localStyle.row}>
         <div className={localStyle.label}>نام خانوادگی:</div>
-        <strong className={localStyle.detail}>{family}</strong>
+        <strong className={localStyle.detail}>{profile.family}</strong>
       </div>
       <div className={localStyle.row}>
         <div className={localStyle.label}>شماره موبایل:</div>
-        <strong className={localStyle.detail}>{mobile}</strong>
+        <strong className={localStyle.detail}>{profile.mobile}</strong>
       </div>
       <div className={localStyle.row}>
         <div className={localStyle.label}>نوع خودرو:</div>
-        <strong className={localStyle.detail}>{carType}</strong>
+        <strong className={localStyle.detail}>
+          {selectCar && selectCar.carType}
+        </strong>
       </div>
       <div className={localStyle.row}>
         <div className={localStyle.label}>مدل خودرو:</div>
-        <strong className={localStyle.detail}>{carModel}</strong>
+        <strong className={localStyle.detail}>
+          {selectCar && selectCar.carModel}
+        </strong>
       </div>
       <div className={localStyle.row}>
         <div className={localStyle.label}>شرکت بیمه گر قبل:</div>
-        <strong className={localStyle.detail}>{insureCompany}</strong>
+        <strong className={localStyle.detail}>
+          {selectInsureCompany ? selectInsureCompany : ""}
+        </strong>
       </div>
       <div className={localStyle.row}>
         <div className={localStyle.label}>درصد تخفیف ثالث:</div>
-        <strong className={localStyle.detail}>{discount}</strong>
+        <strong className={localStyle.detail}>
+          {selectDiscount && selectDiscount.discount}
+        </strong>
       </div>
       <div className={localStyle.row}>
         <div className={localStyle.label}>درصد تخفیف حوادث راننده:</div>
-        <strong className={localStyle.detail}>{driverDiscount}</strong>
+        <strong className={localStyle.detail}>
+          {selectDiscount && selectDiscount.driver}
+        </strong>
       </div>
     </div>
   );
 };
 Detail.displayName = "Detail";
-Detail.propTypes = {
-  name: PropTypes.string,
-  family: PropTypes.string,
-  mobile: PropTypes.string,
-  carType: PropTypes.string,
-  carModel: PropTypes.string,
-  insureCompany: PropTypes.string,
-  discount: PropTypes.string,
-  driverDiscount: PropTypes.string,
-};
+Detail.propTypes = {};
 
 export default Detail;

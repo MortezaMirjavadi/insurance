@@ -1,12 +1,13 @@
 import {
   ACTION_CHANGE_PROFILE,
   ACTION_CHANGE_WIZARD,
-  ACTION_CLOSE_MODAL,
   ACTION_GET_CAR_TYPE,
   ACTION_GET_DRIVER_DISCOUNT,
   ACTION_GET_INSURE_COMPANIES,
   ACTION_GET_THIRD_DISCOUNT,
-  ACTION_SHOW_MODAL,
+  ACTION_SELECT_CAR,
+  ACTION_SELECT_DISCOUNT,
+  ACTION_SELECT_OLD_INSURE_COMPANY,
 } from "@Store/ActionTypes";
 import produce from "immer";
 import { WIZARD_PROCESS } from "@Config/constants";
@@ -14,6 +15,15 @@ import { WIZARD_PROCESS } from "@Config/constants";
 const initialState = {
   wizardLevel: WIZARD_PROCESS.REGISTER,
   profile: null,
+  selectCar: {
+    carType: "",
+    carModel: "",
+  },
+  insureCompany: "",
+  selectDiscount: {
+    discount: "",
+    driver: "",
+  },
   carTypes: [],
   insureCompanies: [],
   thirdDiscount: [],
@@ -24,33 +34,37 @@ const initialState = {
     thirdDiscountLoading: false,
     driverDiscountLoading: false,
   },
-  isShowModal: false,
-  modalContent: null,
 };
 
 const handleStates = {
-  [ACTION_CHANGE_PROFILE]: (state, action) => {
-    const {data} = action;
+  [ACTION_SELECT_DISCOUNT]: (state, action) => {
+    const { data } = action;
     return produce(state, (draftState) => {
-      draftState.profile = {...data};
+      draftState.selectDiscount = data;
+    });
+  },
+  [ACTION_SELECT_OLD_INSURE_COMPANY]: (state, action) => {
+    const { data } = action;
+    return produce(state, (draftState) => {
+      draftState.insureCompany = data;
+    });
+  },
+  [ACTION_SELECT_CAR]: (state, action) => {
+    const { data } = action;
+    return produce(state, (draftState) => {
+      draftState.selectCar = data;
+    });
+  },
+  [ACTION_CHANGE_PROFILE]: (state, action) => {
+    const { data } = action;
+    return produce(state, (draftState) => {
+      draftState.profile = { ...data };
     });
   },
   [ACTION_CHANGE_WIZARD]: (state, action) => {
     const { level } = action;
     return produce(state, (draftState) => {
       draftState.wizardLevel = level;
-    });
-  },
-  [ACTION_CLOSE_MODAL]: (state) => {
-    return produce(state, (draftState) => {
-      draftState.isShowModal = false;
-      draftState.modalContent = null;
-    });
-  },
-  [ACTION_SHOW_MODAL]: (state, action) => {
-    return produce(state, (draftState) => {
-      draftState.modalContent = action.content;
-      draftState.isShowModal = true;
     });
   },
   [ACTION_GET_CAR_TYPE.ACTION_GET_CAR_TYPE_REQUEST]: (state) => {
